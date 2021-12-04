@@ -1,5 +1,6 @@
 package com.example.counterhomework;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -22,7 +23,11 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             boolean isVisible = savedInstanceState.getBoolean("text_visible");
             if (isVisible) {
-                mShowCount.setText(savedInstanceState.getString("text"));
+                String mCountStr = savedInstanceState.getString("text", "0");
+                //Tu dois initialiser la valeur de mCount par la valeur précédente
+                // sinon, lorsque tu clique sur le bouton de comptage il commencera par 0
+                mCount = Integer.parseInt(mCountStr);
+                mShowCount.setText(mCountStr);
                 mShowCount.setVisibility(View.VISIBLE);
             }
         }
@@ -33,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
         if (mShowCount != null)
             mShowCount.setText(Integer.toString(mCount));
     }
+
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         if (mShowCount.getVisibility() == View.VISIBLE) {
